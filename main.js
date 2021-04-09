@@ -40,8 +40,7 @@ function createPlayer(className, playerObj) {
     $life.classList.add('life');
     $name.classList.add('name');
 
-    $life.innerHTML = hp;
-    $life.style.width = '100%';
+    $life.style.width = (hp/(hp/100)) + '%';
 
     $name.innerHTML = name;
 
