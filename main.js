@@ -93,7 +93,6 @@ function changeHP(count){
 
     if (this.hp < 0){
         this.hp = 0;
-        $random.disabled = true;
     }
 }
 
@@ -112,6 +111,10 @@ $random.addEventListener('click', function(){
     } else if(player1.hp === 0 && player2.hp === 0){
         $arenas.appendChild(whoIsWin());
     }
+
+    if (player1.hp === 0 || player2.hp === 0){
+        $random.disabled = true;
+    }
     
     player1.renderHP();
     player2.renderHP();
@@ -122,12 +125,13 @@ $arenas.appendChild(createPlayer(player2));
 
 
 function elHP(){
-    return document.querySelector('.player' + this.player);
+    const $playerNumber = document.querySelector('.player' + this.player);
+    const $playerLIfe = document.querySelector('.player' + this.player + ' .life');
+    return $playerNumber, $playerLIfe;
 }
 
 function renderHP(){
-    const $playerLIfe = document.querySelector('.player' + this.player + ' .life');
-    $playerLIfe.style.width = this.hp + '%';
+    this.elHP().style.width = this.hp + '%';
 }
 
 function createReloadButton(){
