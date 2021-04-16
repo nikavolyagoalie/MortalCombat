@@ -1,3 +1,7 @@
+const $arenas = document.querySelector('.arenas');
+const $control = document.querySelector('.arenas .control');
+// const $random = document.querySelector('.arenas .button');
+
 //объект первого игрока
 const player1 = {
     player: 1,
@@ -27,9 +31,14 @@ const player2 = {
     renderHP: renderHP,
     changeHP: changeHP
 };
-const $arenas = document.querySelector('.arenas');
-const $control = document.querySelector('.arenas .control');
-const $random = document.querySelector('.arenas .button');
+
+const ATTACKS = ['head', 'body', 'foot'];
+
+const HIT = {
+    head: 30,
+    body: 23,
+    foot: 45
+};
 
 function attacks(name) {
     console.log(`${name} fight...`);
@@ -93,7 +102,6 @@ function changeHP(count){
 
     if (this.hp < 0){
         this.hp = 0;
-        $random.disabled = true;
     }
 }
 
@@ -101,45 +109,111 @@ function randomizer(num){
     return Math.ceil(Math.random() * num);
 }
 
-$random.addEventListener('click', function(){
-    player1.changeHP(randomizer(20));
-    player2.changeHP(randomizer(25));
+function enemyAttack(){
+    const hit = ATTACKS[randomizer(3) - 1];
+    const defence = ATTACKS[randomizer(3) - 1];
+    console.log('hit', hit);
+    console.log('defence', defence);
 
-    if (player1.hp === 0 && player1.hp < player2.hp){
-        $arenas.appendChild(whoIsWin(player2.name));
-    } else if (player2.hp === 0 && player1.hp > player2.hp){
-        $arenas.appendChild(whoIsWin(player1.name));
-    } else if(player1.hp === 0 && player2.hp === 0){
+    return {
+        value: randomizer(HIT[hit]),
+        hit,
+        defence
+    };
+}
+
+function userAttack(){
+    const userAttack = {};
+
+    for (let item of $control){
+        if (item.name === 'hit' && item.checked){
+            userAttack.value = randomizer(HIT[item.value]);
+            userAttack.hit = item.value;
+        }
+
+        if (item.name === 'defence' && item.checked){
+            userAttack.defence = item.value;
+        }
+
+        item.checked = false;
+    }
+
+    return userAttack;
+}
+
+function fightLife(pl1, pl2){
+    if (pl2.hit == pl1.defence){
+        console.log('враг ответил тем же');
+        player1.changeHP(randomizer(0));
+    }
+    if (pl1.hit == pl2.defence){
+        console.log('я ответил тем же');
+        player1.changeHP(randomizer(0));
+    }
+
+    if (pl2.hit != pl1.defence){
+        player1.changeHP(randomizer(pl1.value));
+    }
+
+    if (pl1.hit != pl2.defence){
+        player2.changeHP(randomizer(pl2.value));
+    }
+}
+
+function renderingLifes(pl1, pl2){
+    if (pl1.hp === 0 && pl1.hp < pl2.hp){
+        $arenas.appendChild(whoIsWin(pl2.name));
+    } else if (pl2.hp === 0 && pl1.hp > pl2.hp){
+        $arenas.appendChild(whoIsWin(pl1.name));
+    } else if(pl1.hp === 0 && pl2.hp === 0){
         $arenas.appendChild(whoIsWin());
     }
     
-    player1.renderHP();
-    player2.renderHP();
-});
+    if (pl1.hp === 0 || pl2.hp === 0){
+        $control.disabled = true;
+    }
+    
+    pl1.renderHP();
+    pl2.renderHP(); 
+}
 
-$arenas.appendChild(createPlayer(player1));
-$arenas.appendChild(createPlayer(player2));
+$control.addEventListener('submit', function(e){
+    e.preventDefault();
+    const enemy = enemyAttack();
+    const user = userAttack();
+
+    fightLife(user, enemy);          
+
+    renderingLifes(player1, player2);
+
+    console.log(enemy);
+    console.log(user);
+});
 
 
 function elHP(){
-    return document.querySelector('.player' + this.player);
+    const $playerNumber = document.querySelector('.player' + this.player);
+    const $playerLIfe = document.querySelector('.player' + this.player + ' .life');
+    return $playerNumber, $playerLIfe;
 }
 
 function renderHP(){
-    const $playerLIfe = document.querySelector('.player' + this.player + ' .life');
-    $playerLIfe.style.width = this.hp + '%';
+    this.elHP().style.width = this.hp + '%';
 }
 
 function createReloadButton(){
     const $reloadWrap = createElement('div', 'reloadWrap');
     const $button = createElement('button', 'button');
     $button.innerText = 'Restart';
-    $reloadWrap.appendChild($button);
-    $control.appendChild($reloadWrap);
-    document.querySelector('.control> button').style.display = 'none';
 
     $button.addEventListener('click', function(){
         window.location.reload();
     });
+
+    $reloadWrap.appendChild($button);
+    $arenas.appendChild($reloadWrap);
 }
+
+$arenas.appendChild(createPlayer(player1));
+$arenas.appendChild(createPlayer(player2));
 
