@@ -9,7 +9,7 @@ const $chat = document.querySelector('.chat');
 const player1 = {
     player: 1,
     name: "Subzero",
-    hp: 0,
+    hp: 100,
     img: 'http://reactmarathon-api.herokuapp.com/assets/subzero.gif',
     weapon: [
         {name: 'ak47'}
@@ -24,7 +24,7 @@ const player1 = {
 const player2 = {
     player: 2,
     name: "Scorpion",
-    hp: 0,
+    hp: 100,
     img: 'http://reactmarathon-api.herokuapp.com/assets/scorpion.gif',
     weapon: [
         {name: 'glock'}
