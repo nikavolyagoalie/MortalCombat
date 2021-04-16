@@ -122,9 +122,7 @@ function enemyAttack(){
     };
 }
 
-$control.addEventListener('submit', function(e){
-    e.preventDefault();
-    const enemy = enemyAttack();
+function userAttack(){
     const userAttack = {};
 
     for (let item of $control){
@@ -140,29 +138,56 @@ $control.addEventListener('submit', function(e){
         item.checked = false;
     }
 
-    // $random.addEventListener('click', function(){
-        
-    // });
-    player1.changeHP(randomizer(userAttack.value));
-    player2.changeHP(randomizer(enemy.value));
-    
-    if (player1.hp === 0 && player1.hp < player2.hp){
-        $arenas.appendChild(whoIsWin(player2.name));
-    } else if (player2.hp === 0 && player1.hp > player2.hp){
-        $arenas.appendChild(whoIsWin(player1.name));
-    } else if(player1.hp === 0 && player2.hp === 0){
+    return userAttack;
+}
+
+function fightLife(pl1, pl2){
+    if (pl2.hit == pl1.defence){
+        console.log('враг ответил тем же');
+        player1.changeHP(randomizer(0));
+    }
+    if (pl1.hit == pl2.defence){
+        console.log('я ответил тем же');
+        player1.changeHP(randomizer(0));
+    }
+
+    if (pl2.hit != pl1.defence){
+        player1.changeHP(randomizer(pl1.value));
+    }
+
+    if (pl1.hit != pl2.defence){
+        player2.changeHP(randomizer(pl2.value));
+    }
+}
+
+function renderingLifes(pl1, pl2){
+    if (pl1.hp === 0 && pl1.hp < pl2.hp){
+        $arenas.appendChild(whoIsWin(pl2.name));
+    } else if (pl2.hp === 0 && pl1.hp > pl2.hp){
+        $arenas.appendChild(whoIsWin(pl1.name));
+    } else if(pl1.hp === 0 && pl2.hp === 0){
         $arenas.appendChild(whoIsWin());
     }
     
-    if (player1.hp === 0 || player2.hp === 0){
+    if (pl1.hp === 0 || pl2.hp === 0){
         $control.disabled = true;
     }
     
-    player1.renderHP();
-    player2.renderHP();           
+    pl1.renderHP();
+    pl2.renderHP(); 
+}
+
+$control.addEventListener('submit', function(e){
+    e.preventDefault();
+    const enemy = enemyAttack();
+    const user = userAttack();
+
+    fightLife(user, enemy);          
+
+    renderingLifes(player1, player2);
 
     console.log(enemy);
-    console.log(userAttack);
+    console.log(user);
 });
 
 
