@@ -1,5 +1,5 @@
 
-
+//
 const $arenas = document.querySelector('.arenas');
 const $control = document.querySelector('.arenas .control');
 const $fight = document.querySelector('.buttonWrap');
@@ -89,8 +89,10 @@ const logs = {
     ]
 };
 
+//лог для начала игры
 generateLogs('start', player1, player2);
 
+//устанавливаем время(c учетом нуля впепеди если вдруг меньше 10 значение)
 function getTime(){
     const date = new Date();
     const minutes = date.getMinutes();
@@ -108,7 +110,7 @@ function getTime(){
 }
 
 
-
+//генерим логи для разных ситуаций
 function generateLogs(type, player1, player2){
     let text = '';
     let time = '';
@@ -259,33 +261,37 @@ function fightLife(pl1, pl2){
     if (pl2.hit === pl1.defence){
         console.log('враг ответил тем же');
         player1.changeHP(randomizer(0));
+        //лог когда защита отработала
         generateLogs('defence', player1, player2);
     }
 
     if (pl2.hit !== pl1.defence){
         player1.changeHP(randomizer(pl1.value));
         player1.renderHP();
+        //лог когда атака первого игрока
         generateLogs('hit', player2, player1);
-        // generateLogs('defence', player1, player2);
     }
 
     if (pl1.hit !== pl2.defence){
         player2.changeHP(randomizer(pl2.value));
         player2.renderHP();
+        //лог когда атака второго игрока
         generateLogs('hit', player1, player2);
-        // generateLogs('defence', player2, player1);
     }
 }
 
 function renderingLifes(pl1, pl2){
     if (pl1.hp === 0 && pl1.hp < pl2.hp){
         $arenas.appendChild(whoIsWin(pl2.name));
+        //лог когда player2 winner 
         generateLogs('end', pl1, pl2);
     } else if (pl2.hp === 0 && pl1.hp > pl2.hp){
         $arenas.appendChild(whoIsWin(pl1.name));
+        //лог когда player1 winner
         generateLogs('end', pl2, pl1);
     } else if(pl1.hp === 0 && pl2.hp === 0){
         $arenas.appendChild(whoIsWin());
+        //лог когда player1 draw
         generateLogs('draw', pl1, pl2);
     }
     
