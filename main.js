@@ -258,18 +258,23 @@ function userAttack(){
 }
 
 function fightLife(pl1, pl2){
-    if (pl2.hit === pl1.defence){
-        console.log('враг ответил тем же');
-        player1.changeHP(randomizer(0));
-        //лог когда защита отработала
-        generateLogs('defence', player1, player2);
-    }
+    // if (pl2.hit === pl1.defence){
+    //     console.log('враг ответил тем же');
+    //     player1.changeHP(randomizer(0));
+    //     //лог когда защита отработала
+    //     generateLogs('defence', player1, player2);
+    // }
 
     if (pl2.hit !== pl1.defence){
         player1.changeHP(randomizer(pl1.value));
         player1.renderHP();
         //лог когда атака первого игрока
         generateLogs('hit', player2, player1);
+    } else {
+        console.log('враг ответил тем же');
+        player1.changeHP(randomizer(0));
+        //лог когда защита отработала
+        generateLogs('defence', player1, player2);
     }
 
     if (pl1.hit !== pl2.defence){
