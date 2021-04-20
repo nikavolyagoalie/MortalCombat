@@ -1,7 +1,12 @@
 import { whoIsWin } from './whoIsWin.js';
 import { player1, player2 } from './players.js';
+import { querySelector } from './workDOM.js';
+import { generateLogs } from './generateLogs.js';
 
-export function renderingLifes(pl1, pl2){
+const $arenas = querySelector('.arenas');
+const $control = querySelector('.arenas .control');
+
+export const renderingLifes = (pl1, pl2) => {
     const {name: name1, hp: hp1 } = player1;
     const {name: name2, hp: hp2 } = player2;
 

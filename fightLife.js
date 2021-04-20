@@ -2,7 +2,7 @@ import { userAttack, enemyAttack} from './attacks.js';
 import { generateLogs } from './generateLogs.js';
 import { randomizer } from './randomizer.js';
 
-export function fightLife(pl1, pl2){
+export const fightLife = (pl1, pl2) => {
 
     const { hit: hit1, defence: defence1, value: value1 } = userAttack();
     const { hit: hit2, defence: defence2, value: value2 } = enemyAttack();

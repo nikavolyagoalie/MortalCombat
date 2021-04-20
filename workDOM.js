@@ -1,4 +1,5 @@
-export function createElement(tag, className){
+
+export const createElement = (tag, className) => {
     const $tag = document.createElement(tag);
 
     //если передано название класса то создаем класс
@@ -9,12 +10,14 @@ export function createElement(tag, className){
     return $tag;
 }
 
-export function querySelector(identefication){
+export const querySelector = (identefication) => {
     const $identefication = document.querySelector(identefication);
     return $identefication;
 }
 
-export function createPlayer(playerObj) {
+const $arenas = querySelector('.arenas');
+
+export const createPlayer = (playerObj) => {
     const {name, hp, img, player} = playerObj;
 
     const $player = createElement('div', 'player' + player);
@@ -41,7 +44,7 @@ export function createPlayer(playerObj) {
     return $player;
 }
 
-export function createReloadButton(){
+export const createReloadButton = () => {
     const $reloadWrap = createElement('div', 'reloadWrap');
     const $button = createElement('button', 'button');
     $button.innerText = 'Restart';

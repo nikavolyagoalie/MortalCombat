@@ -1,4 +1,3 @@
-export function randomizer (num) {
-    return Math.ceil(Math.random() * num)
-};
+export const randomizer = num => Math.ceil(Math.random() * num);
+
 

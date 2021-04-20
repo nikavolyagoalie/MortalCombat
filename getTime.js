@@ -1,5 +1,5 @@
 //устанавливаем время(c учетом нуля впепеди если вдруг меньше 10 значение)
-export function getTime(){
+export const getTime = () => {
     const date = new Date();
     const minutes = date.getMinutes();
     const hours = date.getHours();

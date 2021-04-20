@@ -4,7 +4,7 @@ import { ATTACKS, HIT } from './serverData.js';
 
 const $control = querySelector('.arenas .control');
 
-export function enemyAttack(){
+export const enemyAttack = () => {
     const enemyAttackObj = {};
 
     const hit = ATTACKS[randomizer(3) - 1];
@@ -19,7 +19,7 @@ export function enemyAttack(){
     return enemyAttackObj;
 }
 
-export function userAttack(){
+export const userAttack = () => {
     const userAttackObj = {};
 
     for (let item of $control){

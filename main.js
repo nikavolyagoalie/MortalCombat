@@ -4,8 +4,8 @@ import { renderingLifes } from './renderingLifes.js';
 import { fightLife } from './fightLife.js';
 import { generateLogs } from './generateLogs.js';
 
-const $arenas = querySelector('.arenas');
 const $control = querySelector('.arenas .control');
+const $arenas = querySelector('.arenas');
 
 //лог для начала игры
 generateLogs('start', player1, player2);

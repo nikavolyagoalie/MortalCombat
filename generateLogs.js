@@ -5,8 +5,8 @@ import { querySelector } from './workDOM.js';
 
 const $chat = querySelector('.chat');
 
-export //генерим логи для разных ситуаций
-function generateLogs(type, player1, player2){
+//генерим логи для разных ситуаций
+export const generateLogs = (type, player1, player2) => {
     let text = '';
     let time = '';
     let startTime = '';
