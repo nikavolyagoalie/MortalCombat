@@ -1,4 +1,4 @@
-export function renderHP() {
-    this.elHP().style.width = this.hp + '%';
-}
+// export function renderHP() {
+//     this.elHP().style.width = this.hp + '%';
+// }
 

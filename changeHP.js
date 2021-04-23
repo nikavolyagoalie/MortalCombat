@@ -1,8 +1,8 @@
-export function changeHP(count){
+// export function changeHP(count){
     
-    this.hp -= count; 
+//     this.hp -= count; 
 
-    if (this.hp < 0){
-        this.hp = 0;
-    }
-};
+//     if (this.hp < 0){
+//         this.hp = 0;
+//     }
+// };
